@@ -23,6 +23,9 @@
 #define UDP_PORT 80
 #define UDP_POLL_PERIOD_MS 500
 
+#define IMAGE_WIDTH 300
+#define IMAGE_HEIGHT 240
+
 // =============================================================================
 // GLOBALS
 // =============================================================================
@@ -30,12 +33,16 @@ bool client_is_connected = false;
 
 WiFiUDP wifi_udp;
 
+uint8_t masked_image[IMAGE_WIDTH][IMAGE_HEIGHT];
+
 // =============================================================================
 // PROTOTYPES
 // =============================================================================
 void wifi_connected_callback(arduino_event_id_t id);
 void led_connected_callback(TimerHandle_t timer);
-void command_process(uint8_t command);
+void process_command(uint8_t command);
+bool is_pixel_ok(uint16_t pixel);
+void detect_fire();
 
 // =============================================================================
 // MAIN
@@ -78,7 +85,8 @@ void setup()
     esp32cam::Config camera_config;
     camera_config.setPins(esp32cam::pins::AiThinker);
     // Sets resolution to QVGA, minimum supported by the datasheet
-    camera_config.setResolution(esp32cam::Resolution::find(300, 240));
+    camera_config.setResolution(
+        esp32cam::Resolution::find(IMAGE_WIDTH, IMAGE_HEIGHT));
     // Sets pixel format to RGB565
     camera_config.setRgb();
 
@@ -103,7 +111,7 @@ void loop()
     }
 
     uint8_t command = wifi_udp.read();
-    command_process(command);
+    process_command(command);
 }
 
 // =============================================================================
@@ -141,7 +149,7 @@ void led_connected_callback(TimerHandle_t timer)
     digitalWrite(LED_CONNECTED_PIN, !led_is_on);
 }
 
-void command_process(uint8_t command)
+void process_command(uint8_t command)
 {
     // This stops the compiler from complaining about frame's lifetime
     std::unique_ptr<esp32cam::Frame> frame;
@@ -156,4 +164,9 @@ void command_process(uint8_t command)
             printf("Dummy");
             break;
     }
+}
+
+bool is_pixel_ok(uint16_t pixel)
+{
+    return true;
 }
