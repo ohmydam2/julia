@@ -1,6 +1,7 @@
 # Julia
 
-Repositório pra robô Julia, nosso projeto de Automação Industrial
+Repositório pra robô Julia, nosso projeto de Automação Industrial.
+Solução baseada no kit do ESP32-Cam da AI-Thinker.
 
 ## Pra fazer
 
