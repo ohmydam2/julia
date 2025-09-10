@@ -2,8 +2,8 @@
 
 Repositório pra robô Julia, nosso projeto de Automação Industrial
 
-# Pra fazer
+## Pra fazer
 
-- Definir pinagem de indicadores/buzzers
+- Definir pinagem de leds/buzzers
 - Fazer mask de cores
 - Processar tamanho de núcleo
