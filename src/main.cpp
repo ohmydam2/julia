@@ -118,7 +118,7 @@ void wifi_connected_callback(arduino_event_id_t id)
             client_is_connected = true;
             break;
         case ARDUINO_EVENT_WIFI_AP_STADISCONNECTED:
-        Serial.println("Client disconnected");
+            Serial.println("Client disconnected");
             client_is_connected = false;
             break;
         default:
@@ -153,8 +153,7 @@ void command_process(uint8_t command)
             printf("Frame size: %u\n", frame->size());
             break;
         default:
-            printf("dummy");
+            printf("Dummy");
             break;
     }
 }
-
